@@ -1,0 +1,1833 @@
+{
+	"user": {
+		"_id": {
+			"type": "string",
+			"required": true
+		},
+		"BannerURL": {
+			"type": "string",
+			"required": true
+		}
+	},
+	"guildUser": {
+		"_id": {
+			"type": "Object",
+			"structure": {
+				"_bsontype": {
+					"type": "string",
+					"required": true
+				},
+				"id": {
+					"type": "Uint8Array",
+					"required": true
+				},
+				"toHexString": {
+					"type": "function",
+					"required": true
+				},
+				"get_inc": {
+					"type": "function",
+					"required": true
+				},
+				"getInc": {
+					"type": "function",
+					"required": true
+				},
+				"generate": {
+					"type": "function",
+					"required": true
+				},
+				"toJSON": {
+					"type": "function",
+					"required": true
+				},
+				"equals": {
+					"type": "function",
+					"required": true
+				},
+				"getTimestamp": {
+					"type": "function",
+					"required": true
+				},
+				"generationTime": {
+					"type": "number",
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"ID": {
+			"type": "string",
+			"required": true
+		},
+		"GuildID": {
+			"type": "string",
+			"required": true
+		},
+		"XP": {
+			"type": "Object",
+			"structure": {
+				"LastXPMsg": {
+					"type": "Date",
+					"required": true
+				},
+				"EXP": {
+					"type": "number",
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"Status": {
+			"type": "Object",
+			"structure": {
+				"LastMessage": {
+					"type": "string",
+					"required": false
+				},
+				"AgreedToRules": {
+					"type": "boolean",
+					"required": true
+				},
+				"Punishments": {
+					"type": "Array",
+					"required": true
+				}
+			},
+			"required": true
+		}
+	},
+	"guild": {
+		"_id": {
+			"type": "string",
+			"required": true
+		},
+		"IsPremium": {
+			"type": "boolean",
+			"required": true
+		},
+		"Admin": {
+			"type": "Object",
+			"structure": {
+				"Enabled": {
+					"type": "boolean",
+					"required": true
+				},
+				"Rulebox": {
+					"type": "Object",
+					"structure": {
+						"Enabled": {
+							"type": "boolean",
+							"required": true
+						},
+						"_id": {
+							"type": "number",
+							"required": true
+						},
+						"ChannelId": {
+							"type": "number",
+							"required": true
+						},
+						"RoleId": {
+							"type": "number",
+							"required": true
+						},
+						"AgreeEmote": {
+							"type": "string",
+							"required": true
+						},
+						"DisagreeEmote": {
+							"type": "string",
+							"required": true
+						},
+						"PinRulebox": {
+							"type": "boolean",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"Settings": {
+			"type": "Object",
+			"structure": {
+				"Enabled": {
+					"type": "boolean",
+					"required": true
+				},
+				"Permissions": {
+					"type": "Object",
+					"structure": {
+						"Enabled": {
+							"type": "boolean",
+							"required": true
+						},
+						"EditModules": {
+							"type": "string",
+							"required": true
+						},
+						"ViewPunishments": {
+							"type": "string",
+							"required": true
+						},
+						"IsLeaderboardPublic": {
+							"type": "boolean",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"General": {
+			"type": "Object",
+			"structure": {
+				"Enabled": {
+					"type": "boolean",
+					"required": true
+				},
+				"Announce": {
+					"type": "Object",
+					"structure": {
+						"Enabled": {
+							"type": "boolean",
+							"required": true
+						},
+						"WelcomeMessages": {
+							"type": "Array",
+							"required": true
+						},
+						"GoodbyeMessages": {
+							"type": "Array",
+							"required": true
+						},
+						"ChannelId": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"CommandPrefix": {
+					"type": "string",
+					"required": true
+				},
+				"BlacklistedChannelIds": {
+					"type": "Array",
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"Moderation": {
+			"type": "Object",
+			"structure": {
+				"Enabled": {
+					"type": "boolean",
+					"required": true
+				},
+				"Auto": {
+					"type": "Object",
+					"structure": {
+						"Enabled": {
+							"type": "boolean",
+							"required": true
+						},
+						"UseDefaultBanWords": {
+							"type": "boolean",
+							"required": true
+						},
+						"SpamThreshold": {
+							"type": "number",
+							"required": true
+						},
+						"UseDefaultBanLinks": {
+							"type": "boolean",
+							"required": true
+						},
+						"CustomBanWords": {
+							"type": "Array",
+							"required": true
+						},
+						"CustomBanLinks": {
+							"type": "Array",
+							"required": true
+						},
+						"WarningsForKick": {
+							"type": "number",
+							"required": true
+						},
+						"WarningsForBan": {
+							"type": "number",
+							"required": true
+						},
+						"AutoMuteSeconds": {
+							"type": "number",
+							"required": true
+						},
+						"NicknameFilter": {
+							"type": "boolean",
+							"required": true
+						},
+						"KickExplicitUsers": {
+							"type": "boolean",
+							"required": true
+						},
+						"SpamNotification": {
+							"type": "boolean",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"StaffLogs": {
+					"type": "Object",
+					"structure": {
+						"Enabled": {
+							"type": "boolean",
+							"required": true
+						},
+						"ChannelId": {
+							"type": "string",
+							"required": true
+						},
+						"LogEvents": {
+							"type": "Array",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"MutedRoleName": {
+					"type": "string",
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"Music": {
+			"type": "Object",
+			"structure": {
+				"Enabled": {
+					"type": "boolean",
+					"required": true
+				},
+				"DefaultVolume": {
+					"type": "number",
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"XP": {
+			"type": "Object",
+			"structure": {
+				"Enabled": {
+					"type": "boolean",
+					"required": true
+				},
+				"RoleRewards": {
+					"type": "Object",
+					"structure": {
+						"Enabled": {
+							"type": "boolean",
+							"required": true
+						},
+						"StackRoles": {
+							"type": "boolean",
+							"required": true
+						},
+						"LevelRoleIds": {
+							"type": "Object",
+							"structure": {},
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"EXPPerMessage": {
+					"type": "number",
+					"required": true,
+					"min": 0,
+					"max": 10000
+				},
+				"MessageLengthThreshold": {
+					"type": "number",
+					"required": true
+				},
+				"Cooldown": {
+					"type": "number",
+					"required": true
+				},
+				"ExtendedCooldown": {
+					"type": "number",
+					"required": true
+				},
+				"DuplicateMessageThreshold": {
+					"type": "number",
+					"required": true
+				},
+				"ExemptChannelIds": {
+					"type": "Array",
+					"required": true
+				},
+				"ExemptRoleIds": {
+					"type": "Array",
+					"required": true
+				},
+				"MaxLeaderboardPage": {
+					"type": "number",
+					"required": true
+				}
+			},
+			"required": true
+		}
+	},
+	"attributes": {
+		"_id": {
+			"type": "string",
+			"required": true
+		},
+		"Commands": {
+			"type": "Object",
+			"structure": {
+				"xp": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"leaderboard": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"join": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"leave": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"play": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"soundcloud": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"stop": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"queue": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"skip": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"volume": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"pause": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"resume": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"kick": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"ban": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "string",
+							"required": true
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"unban": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"mute": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"unmute": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"warn": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"user": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "string",
+							"required": true
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"help": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "string",
+							"required": true
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"ping": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"bot": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"stats": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"embed": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"suggest": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "string",
+							"required": true
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"say": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"image": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				},
+				"rulebox": {
+					"type": "Object",
+					"structure": {
+						"Usage": {
+							"type": "string",
+							"required": true
+						},
+						"Summary": {
+							"type": "string",
+							"required": true
+						},
+						"Remarks": {
+							"type": "undefined",
+							"required": false
+						},
+						"Module": {
+							"type": "Object",
+							"structure": {
+								"Name": {
+									"type": "string",
+									"required": true
+								}
+							},
+							"required": true
+						},
+						"Alias": {
+							"type": "Array",
+							"required": true
+						},
+						"Preconditions": {
+							"type": "Array",
+							"required": true
+						},
+						"Release": {
+							"type": "undefined",
+							"required": false
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"ID": {
+			"type": "string",
+			"required": true
+		},
+		"IsPremium": {
+			"type": "string",
+			"required": true
+		},
+		"Admin": {
+			"type": "Object",
+			"structure": {
+				"Description": {
+					"type": "string",
+					"required": true
+				},
+				"Rulebox": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"Enabled": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"Settings": {
+			"type": "Object",
+			"structure": {
+				"Description": {
+					"type": "string",
+					"required": true
+				},
+				"Permissions": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"Enabled": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"General": {
+			"type": "Object",
+			"structure": {
+				"Description": {
+					"type": "string",
+					"required": true
+				},
+				"Announce": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"CommandPrefix": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"BlacklistedChannelIds": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"Enabled": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"Moderation": {
+			"type": "Object",
+			"structure": {
+				"Description": {
+					"type": "string",
+					"required": true
+				},
+				"Auto": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"StaffLogs": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"MutedRoleName": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"Enabled": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"Music": {
+			"type": "Object",
+			"structure": {
+				"Description": {
+					"type": "string",
+					"required": true
+				},
+				"DefaultVolume": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"Enabled": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"XP": {
+			"type": "Object",
+			"structure": {
+				"Description": {
+					"type": "string",
+					"required": true
+				},
+				"RoleRewards": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"EXPPerMessage": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"MessageLengthThreshold": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"Cooldown": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"ExtendedCooldown": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"DuplicateMessageThreshold": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"ExemptChannelIds": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"ExemptRoleIds": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"MaxLeaderboardPage": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				},
+				"Enabled": {
+					"type": "Object",
+					"structure": {
+						"Description": {
+							"type": "string",
+							"required": true
+						}
+					},
+					"required": true
+				}
+			},
+			"required": true
+		},
+		"DiscordGuild": {
+			"type": "string",
+			"required": true
+		}
+	}
+}

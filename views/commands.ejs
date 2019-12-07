@@ -1,0 +1,105 @@
+<% include ./partials/header %>
+
+<%
+    var commands = commands || [];
+    var commandNames = Object.keys(commands);
+    
+    const getKey = (obj,val) => Object.keys(obj).find(key => obj[key] === val);
+
+    const permissionEnum =
+    {
+        CreateInstantInvite: 1,
+        KickMembers: 2,
+        BanMembers: 4,
+        Administrator: 8,
+        ManageChannels: 16,
+        ManageGuild: 32,
+        AddReactions: 64,
+        ViewAuditLog: 128,
+        PrioritySpeaker: 256,
+        ReadMessages: 1024,
+        ViewChannel: 1024,
+        SendMessages: 2048,
+        SendTTSMessages: 4096,
+        ManageMessages: 8192,
+        EmbedLinks: 16384,
+        AttachFiles: 32768,
+        ReadMessageHistory: 65536,
+        MentionEveryone: 131072,
+        UseExternalEmojis: 262144,
+        Connect: 1048576,
+        Speak: 2097152,
+        MuteMembers: 4194304,
+        DeafenMembers: 8388608,
+        MoveMembers: 16777216,
+        UseVAD: 33554432,
+        ChangeNickname: 67108864,
+        ManageNicknames: 134217728,
+        ManageRoles: 268435456,
+        ManageWebhooks: 536870912,
+        ManageEmojis: 1073741824
+    }
+%>
+
+    <header id="guild-header" class="container-fluid jumbotron bg-transparent center-bg text-center uppercase">
+        <h1  class="text-light">Commands</h1>
+        <hr>
+        <p class="lead">All of 3PG's commands</p>
+    </header>
+    
+    <section id="users" class="container-fluid px-5">
+        <table id="table" class="table table-responsive-lg table-hover table-dark">
+            <thead>
+                <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Module</th>
+                <th scope="col">Usage</th>
+                <th scope="col">Summary</th>
+                <th scope="col">Permissions</th>
+                </tr>
+            </thead>
+            <tbody>
+        <% 
+        commandNames.forEach(command => 
+        { 
+            let commandInfo = commands[command];
+            prefix = prefix || "/";
+            %><tr>
+                <td>
+                    <% 
+                    for (let i = 0; i < commandInfo.Alias.length; i++) 
+                    {
+                        const alias = commandInfo.Alias[i];
+                        %><%= `${prefix}${alias} ${(i < commandInfo.Alias.length - 1 ? `, ` : `` )}` %><%
+                    }
+                    %>
+                </td>
+                <td><%= commandInfo.Module.Name %></td>
+                <td><%= prefix + commandInfo.Usage %></td>
+                <td><%= commandInfo.Summary %></td>
+                <td>
+                    <% 
+                    if (!commandInfo.Preconditions) return;
+                    commandInfo.Preconditions.forEach(precondition =>
+                    {
+                        %><%= permissionEnum.getKey(precondition).toSentenceCase() %><%
+                    }); 
+                    %>
+                </td>
+            </tr><% 
+        });
+        %>
+        </tbody>
+        </table>
+        <p class="ml-2 uppercase text-center">
+            <% 
+            let suffix = (map) => map.size !== 1 ? "s" : "";
+            %>
+            <%= commandNames.length %> Command<%= suffix(commandNames) %>
+        </p>
+    </section>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.bootstrap.min.css" type="text/css">
+    <script src="/js/table.js"></script>
+
+<% include ./partials/footer %>

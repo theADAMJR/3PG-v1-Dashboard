@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent uppercase"> 
+    <a class="navbar-brand" href="/">
+        <img id="logo-small" class="mr-2" src="/img/3pg.png">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div id="navbarNav" class="collapse navbar-collapse"> 
+        <div id="navbar" class="navbar-nav row">
+            <a class="nav-item nav-link col-lg col-md-12 ml-2" href="/commands">Commands</a>
+            <a class="nav-item nav-link col-lg col-md-12 ml-2" href="/support">Support</a> 
+        </div> 
+        
+        <div class="ml-auto">
+            <% 
+            if (!user)
+            { 
+            %><a href="/login?redirect=<%= loginRedirect %>">
+                    <button class="ui purple animated fading basic button" tabindex="0">
+                        <div class="visible content">Login</div>
+                        <div class="hidden content">
+                            <i class="fab fa-discord"></i>
+                        </div>
+                    </button>
+                </a><% 
+            }
+            else 
+            {
+                %>
+                <div class="dropdown">
+                    <a id="userButton" class="btn btn-small btn-secondary dropdown-toggle bg-transparent" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="user-avatar mr-1" src="<%= user ? user.avatarUrl(64) : `` %>"> <%= user ? user.username : `Loading...` %>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item text-light" href="/servers">Servers</a>
+                        <!-- <a class="dropdown-item" href="/user">Profile</a> -->
+                        <hr>
+                        <a class="dropdown-item text-light" href="/logout">Logout</a>
+                    </div>
+                </div>
+                <%               
+            }
+            %>
+        </div>
+    </div> 
+</nav>

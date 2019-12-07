@@ -1,0 +1,114 @@
+<% include ../partials/header %>
+
+<% include ../partials/guildSidebar %>
+<%
+    getConfigValue = (value, config, name) =>
+    {
+        let validatePremium = config && config.IsPremium ? "disabled" : "";
+        let getInput = (input) => config && config.Input && config.Input.Type != "Other" ? config.Input.Type : input;
+        let repeated = (type) => `class="form-control float-left" name="${name}" type="${getInput(type)}" value="${value}" ${validatePremium}`;
+
+        switch (typeof(value)) 
+        {
+            case "boolean":
+                return `<label class="checkbox-inline d-flex justify-content-end">
+                            <input ${repeated('checkbox')}" data-toggle="toggle" ${value ? "checked" : ""}>
+                        </label>`;
+            case "number":
+                return `<input ${repeated("number")}>`;
+            case "object":
+                if (Array(value)) return `<textarea class="form-control" name="${name}" ${validatePremium}>${value}</textarea>`;
+                return value;
+            case "string":
+                return value.length >= 32 ? `<textarea class="form-control" name="${name}" ${validatePremium}>${value}</textarea>` : `<input ${repeated("text")}>`;
+            case "undefined":
+                return "Config undefined";
+            default:
+                return typeof(value);
+        }
+    }
+%>
+    <header id="guild-header" class="container jumbotron bg-transparent center-bg text-center uppercase">
+        <h1 class="text-light"><%= socketGuild.name %></h1>
+        <hr class="my-2">
+        <p class="lead text-muted"><%= module %></p>
+    </header>
+
+    <section id="modules" class="container">
+        <form action="/servers/<%= socketGuild.id %>/<%= module.toLowerCase() %>?_method=PUT" method="POST">
+            <input name="guild[<%= module %>][Enabled]" type="hidden" value="true">
+            <div class="row">
+            <% 
+            let properties = Object.keys(guild[module]);
+            properties.forEach(property => 
+            {
+                if (property === "Enabled") return;
+
+                let moduleProperty = guild[module][property];
+                let modulePropertyConfig = modules[module][property] || {};
+
+                if (typeof(moduleProperty) == "object" && !moduleProperty[0] || moduleProperty == 0)
+                {
+                    let enabled = moduleProperty["Enabled"];
+                    let enabledConfig = modules[module][property] && modules[module][property]["Enabled"];
+
+                    %><div class="<%= isPremium ? "bg-info" : "bg-dark" %> card text-white m-2 col-lg-5" style="max-width: 36rem;">
+                        <div class="card-header">
+                            <%= property.toSentenceCase() %>
+                                <i class="fas fa-question-circle text-primary" data-toggle="tooltip" data-placement="top" title="<%= description %>"></i>
+                                <% if (remarks) { %><i class="fas fa-info-circle text-secondary" data-toggle="tooltip" data-placement="top" title="<%= remarks %>"></i> <% } %>
+                            <% if (isPremium) { %><a class="badge badge-light" href="/pro">Pro</a><% } %>
+                            <%- getConfigValue(enabled, enabledConfig, `guild[${module}][Enabled]`) %>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text float-left ">
+                                <%
+                                Object.keys(moduleProperty).forEach(subproperty =>
+                                {
+                                    if (subproperty === "Enabled") return;
+
+                                    let submoduleProperty = moduleProperty[subproperty];
+                                    let submodulePropertyConfig = modules[module][property][subproperty];
+
+                                    description = submodulePropertyConfig && submodulePropertyConfig.Description || "No description set.";
+
+                                    %><div class="mb-3" style="border-bottom: 1px solid black;">
+                                        <p><%= subproperty.toSentenceCase() %>
+                                            <i class="fas fa-question-circle text-primary" data-toggle="tooltip" data-placement="top" title="<%= description %>"></i>
+                                        </p>
+                                        <%- getConfigValue(submoduleProperty, submodulePropertyConfig, `guild[${module}][${property}][${subproperty}]`) %>
+                                    </div><% 
+                                });
+                                %>
+                            </p>
+                        </div>
+                </div><%
+                    return;
+                }
+                %><div class="<%= isPremium ? "bg-info" : "bg-dark" %> card text-white m-2 col-sm-3" style="max-width: 18rem;">
+                    <div class="card-header">
+                        <%= property.toSentenceCase() %>
+                        <% if (isPremium) { %><span class="badge badge-light">Pro</span><% } %>
+                            <i class="fas fa-question-circle text-primary" data-toggle="tooltip" data-placement="top" title="<%= description %>"></i>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><%- getConfigValue(moduleProperty, modulePropertyConfig, `guild[${module}][${property}]`) %></p>
+                    </div>
+                </div><%
+            }); %>
+            </div>
+        </form>
+    </section>
+
+    <script>
+        // on any input change -> unsaved changes message
+        $("input").on("change", () => setTimeout(() => 
+        {
+            confirm("Save changes?") && $('form').submit();
+        }, 2500));
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
+<% include ../partials/footer %>

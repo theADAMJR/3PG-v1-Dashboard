@@ -1,0 +1,167 @@
+<% include ../partials/header %>
+
+<% include ../partials/guildSidebar %>
+<%
+var managerUser = guilds.get(socketGuild.id);
+//getAvatar = (user) => user.displayAvatarURL.replace("png", user.avatar && user.avatar[0] == "f" ? "gif" : "png");
+var actionIsValid = (member, prereq) => member.bannable && managerUser.permissions.some(p => p == prereq || "ADMINISTRATOR");
+
+getPunishments = (guildUser, type) => guildUser ? guildUser.Status.Punishments.filter(p => p.Type == type) || [] : [];
+%>
+    <header id="guild-header" class="container-fluid jumbotron bg-transparent center-bg text-center uppercase">
+        <h1 id="<%= socketGuild.id %>" class="text-light"><%= socketGuild.name %></h1>
+        <p class="lead">Users</p>
+    </header>
+    
+    <section id="users" class="container-fluid">
+        <%
+        if (!socketGuild.members.some(m => m.bannable))
+        {
+        %><div class="col-lg-4 alert alert-warning" role="alert">
+            <%= bot.getBotUser().username %> does not have permission to manage users. Please give <%= bot.getBotUser().username %> more permissions to allow this.
+        </div><%
+        }
+        %>
+        <table id="users-table" class="table table-hover table-dark">
+            <thead>
+                <tr>
+                <th scope="col">User</th>
+                <th scope="col">Bans</th>
+                <th scope="col">Kicks</th>
+                <th scope="col">Mutes</th>
+                <th scope="col">Warns</th>
+                <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+        <% 
+        socketGuild.members.forEach(member =>
+        {
+            if (member.id == bot.getBotUser().id) return;
+            
+            let guildUser = guildUsers ? guildUsers.find(u => u.ID == member.user.id) : null;
+            
+            %><tr id="<%= member.id %>">
+                <td>
+                    <img class="user-avatar pr-1" src="<%= member.user.displayAvatarURL %>?size=32">
+                    <span title="<%= member.user.tag %>" alt="<%= member.user.tag %>">
+                        <%= (member.displayName == member.user.username ? member.displayName : `[${member.displayName}] ${member.user.username}`) %>
+                    </span>
+                    <span class="text-dark">
+                        <% let tag = member.user.tag; %>
+                        <%= tag.substring(tag.length - 5, tag.length) %></span>
+                    <% if (member.user.bot) { %> <span class="badge badge-secondary">BOT</span><% } %>
+                </td>
+                <td><%= getPunishments(guildUser, "Ban").length %></td>
+                <td><%= getPunishments(guildUser, "Kick").length %></td>
+                <td><%= getPunishments(guildUser, "Mute").length %></td>
+                <td><%= getPunishments(guildUser, "Warn").length %></td>
+                <td class="user-actions text-dark">
+                    <span class="mr-1">
+                        <% if (!actionIsValid(member, "BAN_MEMBERS")) { %><i title="Ban" alt="Ban" class="action fas fa-ban" data-dismiss="#confirmAction"></i><% }
+                        else if (guildUser && guildUser.Status.IsBanned) { %><i title="Unban" alt="Unban" class="action fas fa-unban"></i><% }
+                        else { %><i data-toggle="modal" data-target="#confirmAction" title="Ban" alt="Ban" class="action fas fa-ban enabled"></i><% } %>
+                    </span>
+                    <span class="mr-1">
+                        <% if (!actionIsValid(member, "MUTE_MEMBERS")) { %><i title="Mute" alt="Mute" class="action fas fa-microphone-slash"></i><% }
+                        else if (guildUser && guildUser.Status.IsMuted) { %><i title="Unmute" alt="Unmute" class="action fas fa-microphone"></i><% }
+                        else { %><i data-toggle="modal" data-target="#confirmAction" title="Mute" alt="Mute" class="action fas fa-microphone-slash enabled"></i><% } %>
+                    </span>
+                    <span class="mr-1">
+                        <% if (!actionIsValid(member, "KICK_MEMBERS")) { %><i title="Kick" alt="Kick" class="action fas fa-times"></i><% }
+                        else { %><i data-toggle="modal" data-target="#confirmAction" title="Kick" alt="Kick" class="action fas fa-times enabled"></i><% } %>
+                    </span>
+                    <span class="mr-1">
+                        <% if (!actionIsValid(member, "BAN_MEMBERS")) { %><i title="Warn" alt="Warn" class="action fas fa-exclamation-triangle"></i><% }
+                        else { %><i data-toggle="modal" data-target="#confirmAction" title="Warn" alt="Warn" class="action fas fa-exclamation-triangle enabled"></i><% } %>
+                    </span>
+                </td>
+            </tr><%            
+        }); 
+        %>
+
+        <div class="modal fade" id="confirmAction" tabindex="-1" role="dialog" aria-labelledby="confirmActionCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmActionLongTitle">Confirm Action</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="reason">Reason:</label>
+                            <textarea class="form-control" id="reason" rows="3">No reason specified.</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <a class="btn btn-danger text-light" href="">Confirm</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </tbody>
+        </table>
+        <p class="ml-2 uppercase text-center">
+            <% 
+            let suffix = (map) => map.size > 1 ? "s" : "";
+
+            let members = socketGuild.members; 
+            let humans = members.filter(m => !m.user.bot);
+            let bots = members.filter(m => m.user.bot);
+            %>
+            <%= members.size %> Total Member<%= suffix(members) %>
+            <span class="mx-2">|</span>
+            <%= humans.size %> Human<%= suffix(humans) %>
+            <span class="mx-2">|</span>
+            <%= bots.size %> Bot<%= suffix(bots) %>
+        </p>
+    </section>
+
+    <script>
+    $(document).ready(() => 
+    {
+        $('#users-table').DataTable(
+        {
+            "bInfo": false,
+            "columnDefs": [{ "targets": 5, "orderable": false }],
+            "sPaginationType": "simple",
+            "oLanguage": 
+            { 
+                "dom": 'Blfrtip',
+                "sLengthMenu": "Size: _MENU_ ", 
+                "sZeroRecords": "Nothing was found 😢",
+                "sEmptyTable": "There's nothing to see here...",
+            }
+        });
+        $(`input[type="search"]`).addClass("form-control form-control-sm mr-2");
+        $(`select[name="users-table_length"]`).addClass("form-control form-control-sm").parent().addClass("ml-2");
+
+        actionPrompt = (span) =>
+        {
+            let id = span.parent().parent().attr("id");
+            let punishment = span.children()[0].getAttribute("title");
+            let guildName = $("#guild-header > h1").text();
+            let guildId = $("#guild-header > h1").attr("id");
+            let username = $(`#${id} > td`)[0].textContent.trim();
+
+            var reason = $(".modal-body #reason");
+
+            $(".modal-title").text(`${punishment} ${username}?`);
+            reason.text(punishment == "Ban" || "Kick" ? `Sorry, we decided to ${punishment.toLowerCase()} you from ${guildName}.` : `No reason specified.`);
+            $(".modal-footer a").attr("href", `/servers/${guildId}/users/${id}/${punishment}?reason=${reason.text()}`);
+        }
+
+        $(".user-actions > span").on("click", function(){ actionPrompt($(this)) });
+        
+        $("a.paginate_button").addClass("btn btn-info");
+        $("a.paginate_button").on("click", () => 
+        {
+        $("a.paginate_button").addClass("btn btn-info");
+        });
+    });
+    </script>
+
+<% include ../partials/footer %>

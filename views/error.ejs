@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang=en>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="The highly customizable Discord bot">
+    <title>3PG - Discord Bot</title>
+
+    <script src="/lib/aos.min.js" type="text/javascript"></script>
+    <script src="/lib/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <script src="https://kit.fontawesome.com/c70fcf5d2e.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/aos.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/main.css" type="text/css">
+    <link rel="stylesheet" href="/css/semantic-ui-button.min.css" type="text/css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" type="text/css">
+    
+    <link rel="shortcut icon" href="/img/3pg.png">
+</head>
+<body>
+
+<div id="error" class="error-<%= code %> container jumbotron bg-transparent">
+    <h1><%= (code > 0 ? code : 500) %></h1>
+    <p id="error-message" class="lead"><%= message %></p>
+    <div>
+        <%
+        if (code == 401)
+        {
+        %><a href="/login?redirect=<%= loginRedirect %>">
+            <button class="ui green vertical basic animated button" tabindex="0">
+                <div class="hidden content"><i class="fas fa-arrow-left"></i></div>
+                <div class="visible content">Login</div>
+            </button>
+        </a><%
+        }
+        else
+        {
+        %><p class="text-muted">Believe this a bug? Please let us know to improve 3PG's future 🤖.</p>
+        <a href="<%= loginRedirect || `/servers` %>">
+            <button class="ui green vertical basic animated button" tabindex="0">
+                <div class="hidden content"><i class="fas fa-arrow-left"></i></div>
+                <div class="visible content">Go Back</div>
+            </button>
+        </a><%
+        }
+        %>
+        <a href="/support">
+            <button class="ui primary vertical basic animated button" tabindex="0">
+                <div class="hidden content"><i class="fab fa-discord"></i></div>
+                <div class="visible content">Support</div>
+            </button>
+        </a>
+    </div>
+</div>
+
+<% include ./partials/footer %>

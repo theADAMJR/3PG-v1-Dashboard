@@ -1,0 +1,94 @@
+<% include ../partials/header %>
+
+<% include ../partials/guildSidebar %>
+
+<%
+let punishments = [];
+guildUsers.forEach(guildUser =>
+{
+    guildUser.Status.Punishments.forEach(p => 
+    {
+        p.TargetID = guildUser.ID;        
+        punishments.push(p);
+    });
+}); 
+%>
+    <header id="guild-header" class="container-fluid jumbotron bg-transparent center-bg text-center uppercase">
+        <h1 id="<%= socketGuild.id %>" class="text-light"><%= socketGuild.name %></h1>
+        <p class="lead">Punishments</p>
+    </header>
+    
+    <section id="users" class="container-fluid px-5">
+        <table id="table" class="table table-responsive-lg table-hover table-dark">
+            <thead>
+                <tr>
+                <th scope="col">Type</th>
+                <th scope="col">User</th>
+                <th scope="col">By</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                </tr>
+            </thead>
+            <tbody>
+        <% 
+        punishments.forEach(punishment => 
+        { 
+            let member = socketGuild.members.get(String(punishment.TargetID));
+            let instigator = socketGuild.members.get(String(punishment.InstigatorID)) || bot.getBotUser();
+            if (!member) return;
+
+            %><tr>
+                <td><%- punishment.Type + (Date.now() < punishment.End ? ` <span class="badge badge-danger">ACTIVE</span>` : ``) %></td>
+                <td>
+                    <img class="user-avatar pr-1" src="<%= member.user.displayAvatarURL %>?size=32">
+                    <span title="<%= member.user.tag %>" alt="<%= member.user.tag %>">
+                        <%= (member.displayName == member.user.username ? member.displayName : `[${member.displayName}] ${member.user.username}`) %>
+                    </span>
+                    <span class="text-dark">
+                        <% let tag = member.user.tag; %>
+                        <%= tag.substring(tag.length - 5, tag.length) %></span>
+                    <% if (member.user.bot) { %> <span class="badge badge-secondary">BOT</span><% } %>
+                </td>
+                <td>
+                    <img class="user-avatar pr-1" src="<%= instigator.user.displayAvatarURL %>?size=32">
+                    <span title="<%= instigator.user.tag %>" alt="<%= instigator.user.tag %>">
+                        <%= (instigator.displayName == instigator.user.username ? instigator.displayName : `[${instigator.displayName}] ${instigator.user.username}`) %>
+                    </span>
+                    <span class="text-dark">
+                        <% let instigatorTag = instigator.user.tag; %>
+                        <%= instigatorTag.substring(instigatorTag.length - 5, instigatorTag.length) %></span>
+                    <% if (instigator.user.bot) { %> <span class="badge badge-secondary">BOT</span><% } %>
+                </td>
+                <td><%= punishment.Reason %></td>
+                <td><%= punishment.Start.toCleanString() %></td>
+                <td><%= punishment.End.toCleanString() %></td>
+            </tr><% 
+        });
+        %>
+        </tbody>
+        </table>
+        <p class="ml-2 uppercase text-center">
+            <% 
+            let arraySuffix = (array) => array.length !== 1 ? "s" : "";
+
+            let bans = punishments.filter(p => p.Type == "Ban");
+            let mutes = punishments.filter(p => p.Type == "Mute");
+            let kicks = punishments.filter(p => p.Type == "Kick");
+            let warns = punishments.filter(p => p.Type == "Warn");
+            %>
+            <%= punishments.length %> Punishment<%= arraySuffix(punishments) %>
+            <span class="mx-2">|</span>
+            <%= bans.length %> Ban<%= arraySuffix(bans) %>
+            <span class="mx-2">|</span>
+            <%= mutes.length %> Mute<%= arraySuffix(mutes) %>
+            <span class="mx-2">|</span>
+            <%= kicks.length %> Kick<%= arraySuffix(kicks) %>
+            <span class="mx-2">|</span>
+            <%= warns.length %> Warn<%= arraySuffix(warns) %>
+        </p>
+    </section>
+
+<script src="/js/table.js"></script>
+
+<% include ../partials/footer %>

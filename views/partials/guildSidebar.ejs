@@ -1,0 +1,112 @@
+<% var configModules = ["Admin", "General", "Moderation", "Music", "XP"]; %>
+
+<style>
+        /* The sidebar menu */
+.sidebar 
+{
+ height: 100%; /* 100% Full-height */
+ width: 250px; /* 0 width - change this with JavaScript */
+ position: fixed; /* Stay in place */
+ z-index: 1; /* Stay on top */
+ top: 0;
+ left: 0;
+ background-color: rgb(95, 25, 95);
+ overflow-x: hidden; /* Disable horizontal scroll */
+ padding-top: 60px; /* Place content 60px from the top */
+ transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+/* The sidebar links */
+.sidebar a 
+{
+ padding: 8px 8px 8px 32px;
+ font-size: 20px;
+ display: block;
+ transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+ color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+ position: absolute;
+ top: 0;
+ right: 25px;
+ font-size: 36px;
+ margin-left: 50px;
+}
+
+#sidebar.closed
+{
+   width: 0;
+}
+
+.sidebarOpen
+{    
+   margin-left: 250px;
+}
+
+body
+{
+   transition: margin-left .5s; /* If you want a transition effect */
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+ .sidebar {padding-top: 15px;}
+ .sidebar a {font-size: 18px;}
+}
+</style>
+
+<div id="sidebar" class="sidebar closed text-light">
+  <!-- <a id="sidebarClose" href="javascript:void(0)" class="closebtn">&times;</a> -->
+  <a href="/servers/<%= socketGuild.id %>">Dashboard</a>
+  <hr>
+  <a class="<%= !guild.XP.Enabled ? `disabled` : ``%>" href="/servers/<%= socketGuild.id %>/leaderboard">Leaderboard</a>
+  <a class="<%= !guild.Moderation.Enabled ? `disabled` : ``%>" href="/servers/<%= socketGuild.id %>/punishments">Punishments</a>
+  <!-- <a href="/servers/<%= socketGuild.id %>/settings">Settings</a> -->
+  <hr>
+  <a class="<%= !guild.Admin.Enabled ? `disabled` : ``%>" href="/servers/<%= socketGuild.id %>/admin">Admin</a>
+  <a href="/servers/<%= socketGuild.id %>/general">General</a>
+  <a class="<%= !guild.Moderation.Enabled ? `disabled` : ``%>" href="/servers/<%= socketGuild.id %>/moderation">Moderation</a>
+  <a class="<%= !guild.Music.Enabled ? `disabled` : ``%>" href="/servers/<%= socketGuild.id %>/music">Music</a>
+  <a class="<%= !guild.XP.Enabled ? `disabled` : ``%>" href="/servers/<%= socketGuild.id %>/xp">XP</a>
+  <hr>
+  <a href="/servers"><i class="fas fa-arrow-left"></i> Servers</a>
+</div>
+
+<button id="sidebarToggle" class="navbar-dark navbar-toggler ml-3 float-left">
+    <span class="navbar-toggler-icon"></span>
+</button>
+
+<script>
+$("#sidebarToggle").on("click", () => 
+{ 
+    $("#sidebar").toggleClass("closed"); 
+    $("body").toggleClass("sidebarOpen") 
+});
+// $("#sidebarClose").on("click", () => $("#sidebar").addClass("closed"));
+</script>
+
+<script>
+  function onReady(callback) {
+    var intervalId = window.setInterval(function() {
+    if (document.getElementsByTagName('body')[0] !== undefined) {
+      window.clearInterval(intervalId);
+      callback.call(this);
+    }
+  }, 1000);
+}
+
+function setVisible(selector, visible) {
+  document.querySelector(selector).style.display = visible ? 'block' : 'none';
+}
+
+onReady(function() {
+  setVisible('body', true);
+  setVisible('#loading', false);
+});
+</script>

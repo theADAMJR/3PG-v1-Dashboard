@@ -1,0 +1,73 @@
+<% include ../partials/header %>
+
+<% include ../partials/guildSidebar %>
+
+<header id="guild-header" class="container-fluid jumbotron bg-transparent center-bg text-center uppercase">
+    <h1 class="text-light"><%= socketGuild.name %></h1>
+    <p class="lead">Leaderboard</p>
+</header>
+
+<section id="leaderboard" class="container-fluid px-5">
+    <table id="table" class="table table-responsive-lg table-hover table-dark">
+        <thead>      
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Username</th>
+            <th scope="col">EXP</th>
+            <th scope="col">Messages</th>
+            <th scope="col">Last Message</th>
+            <th scope="col">Created</th>
+            </tr>
+        </thead>
+        <tbody>
+    <%
+    guildUsers.sort(u => u.XP.EXP).forEach(guildUser =>
+    {
+        let member = socketGuild.members.get(String(guildUser.ID));
+        if (member == null) return;
+
+        let userXP = guildUser.XP;
+        %><tr>
+            <th scope="row">
+                <%= guildUsers.indexOf(guildUser) + 1 %>
+            </th>
+            <td>
+                <img class="user-avatar mr-1" src="<%= member.user.displayAvatarURL %>?size=32">
+                <span title="<%= member.user.tag %>" alt="<%= member.user.tag %>">
+                    <%= (member.displayName == member.user.username ? member.displayName : `[${member.displayName}] ${member.user.username}`) %>
+                </span>
+                <span class="text-dark">
+                    <% let tag = member.user.tag; %>
+                    <%= tag.substring(tag.length - 5, tag.length) %></span>
+                <% if (member.user.bot) { %> <span class="badge badge-secondary">BOT</span><% } %>
+            </td>
+            <td><%= userXP.EXP %> XP</td>
+            <td><%= userXP.EXP / guild.XP.EXPPerMessage %></td>
+            <td><%= userXP.EXP / guild.XP.EXPPerMessage > 0 ? userXP.LastXPMsg.toCleanString() : "Never" %></td>
+            <td><%= member.user.createdAt.toCleanString() %></td>
+        </tr><%
+    });
+    %>
+    </tbody>
+    </table>
+    <p class="ml-2 uppercase text-center">
+        <% 
+        let suffix = (map) => map.size !== 1 ? "s" : "";
+
+        let members = socketGuild.members; 
+        let expMembers = members.filter(m => guildUsers.find(u => u.ID == m.user.id));
+
+        let expTotal = 0;
+        let totalEXP = guildUsers.forEach(u => expTotal += u.XP.EXP);
+        %>
+        <%= members.size %> Total Member<%= suffix(members) %>
+        <span class="mx-2">|</span>
+        <%= expMembers.size %> EXP Member<%= suffix(expMembers) %>
+        <span class="mx-2">|</span>
+        <%= expTotal %> Total EXP %>
+    </p>
+</section>
+
+<script src="/js/table.js"></script>
+
+<% include ../partials/footer %>

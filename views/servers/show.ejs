@@ -1,0 +1,34 @@
+<% include ../partials/header %>
+
+<% include ../partials/guildSidebar %>
+
+    <header id="guild-header" class="container-fluid jumbotron bg-transparent center-bg text-center uppercase">
+        <h1 class="text-light"><%= socketGuild.name %></h1>
+        <hr class="my-2">
+        <p class="lead text-muted">Dashboard</p>
+    </header>
+
+    <section id="modules" class="container text-center secondary">
+        <h2 class="uppercase">In development</h2>
+        <p class="lead">
+            The server dashboard is in development. For updates, please join our discord.
+        </p>
+        <% 
+        configModules.forEach(configModule =>
+        {
+            let module = modules[configModule]["Description"];
+
+            %><a href="/servers/<%= socketGuild.id %>/<%= configModule.toLowerCase() %>">
+            <div class="col-md-6 float-left">
+                <div class="center-bg m-2" style="background: purple;">
+                    <div class="card-body"> 
+                        <h5 class="card-title text-light"><%= configModule %></h5>
+                        <h6 class="card-text text-muted"><%= module.Description %></h6> 
+                    </div>
+                </div> 
+            </div>
+        </a><%
+        }); %>
+    </section>
+
+<% include ../partials/footer %>

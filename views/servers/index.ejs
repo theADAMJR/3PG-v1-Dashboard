@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+<%
+	getIconUrl = (guild, size = 32) =>
+	{
+		try { return guild.iconUrl(size); } 
+		catch { return ""; }
+	}
+
+	getAbbr = (word) =>
+	{
+		var words = word.split(" ");
+		var abbr = [];
+		for (let i = 0; i < words.length; i++) 
+		{
+			words[i][0] && abbr.push(words[i][0]);			
+		}
+		return abbr.join("");
+	}
+
+	let username = user.username;
+	const messages = [`Welcome back, ${username}!`, `Great to see you, ${username}!`, `Hey, ${username}!`];
+	var random = Math.floor(Math.random() * messages.length);
+	greeting = messages[random];
+
+%>
+	<header id="servers-header" class="container-fluid jumbotron center-bg bg-transparent text-center">
+			<h1 class="text-light"><%= greeting %></h1>
+			<p class="lead text-light">View or improve a server</p>
+	</header>
+
+	<div class="container">
+        <div class="row d-flex justify-content-center">
+	<%
+	guilds.forEach(guild =>
+	{
+		let userIsGuildManager = guild.permissions.some(p => p == "MANAGE_GUILD" || p == "ADMINISTRATOR");
+		if (!userIsGuildManager) return;
+		%>	
+		<div class="guild-icon m-1 text-center col col-lg-1 col-sm-2 col-xs-4" title="<%= guild.name %>" data-aos="fade-zoom-in">
+			<a href="<%= `/${ bot.inGuild(guild.id) ? "servers" : "invite" }/${guild.id}`%>">
+				<div data-toggle="tooltip" data-placement="bottom" alt="<%= guild.name %>" title="<%= guild.name %>"><% 
+				let icon = getIconUrl(guild, 64);
+				if (icon) { %><img src="<%= icon %>"><% }
+				else { %><p class="text-dark"><%= getAbbr(guild.name) %></p><% }
+		%></a>
+		</div>
+		</div>
+		<%
+	});
+	%>
+		</div> 
+	</div>
+
+	<script>
+		$(".guild-icon").fadeIn();
+	</script>
+	
+<% include ../partials/footer %>

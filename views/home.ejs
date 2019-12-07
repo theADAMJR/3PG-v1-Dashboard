@@ -1,0 +1,65 @@
+<% include partials/header %>
+
+<header id="epg-header" class="jumbotron center-bg m-0">
+    <div class="container text-center">
+        <img id="logo" class="fade-in" src="/img/3pg.png"></img>
+        <div>
+            <hr>
+            <p class="lead text-light mb-3">The highly customizable Discord bot</p>
+            <a href="<%= key ? "/servers" : "/login" %>">
+                <button class="ui purple animated fading basic button" tabindex="0">
+                    <div class="hidden content"><i class="fab fa-discord"></i></div>
+                    <div class="visible content">Add</div>
+                </button>
+            </a>
+            <!-- <a href="/#features">
+                <button class="ui inverted vertical basic animated button" tabindex="0">
+                    <div class="hidden content"><i class="fas fa-arrow-down"></i></div>
+                    <div class="visible content">View Features</div>
+                </button>
+            </a> -->
+        </div>
+    </div>
+</header>
+
+<!-- <section id="features" class="pt-5">
+    <div class="container">
+        <div class="row text-light">
+            <div class="col-sm-6 order-sm-1 order-xs-1">
+                <img src="https://cdn.pixabay.com/photo/2017/03/25/18/06/color-2174066_960_720.png">
+            </div>
+            <div class="col-sm-6 order-sm-2 order-xs-2">
+                <h1>Ban Panel</h1>
+                <p class="lead">View a log of all punishments on your server. See every ban, kick, mute, warn and more!</p>                
+            </div>
+
+            <div class="col-sm-6 order-sm-4 order-xs-4">
+                <img src="https://cdn.pixabay.com/photo/2017/03/25/18/06/color-2174066_960_720.png">
+            </div>
+            <div class="col-sm-6 order-sm-3 order-xs-3">
+                <h1>Levels, EXP and more!</h1>
+                <p class="lead">Level up your Discord server, with 3PG's XP system! Customize your own EXP system with a highly customizable dashboard</p>                
+            </div>
+
+            <div class="col-sm-6 order-sm-5 order-xs-5">
+                <img src="https://cdn.pixabay.com/photo/2017/03/25/18/06/color-2174066_960_720.png">
+            </div>
+            <div class="col-sm-6 order-sm-6 order-xs-6">
+                <h1>Leaderboards</h1>
+                <p class="lead">Compete against other servers or all players for the highest spot in your server or in all servers!</p>                
+            </div>
+
+            <div class="col-sm-6 order-sm-8 order-xs-8">
+                <img src="https://cdn.pixabay.com/photo/2017/03/25/18/06/color-2174066_960_720.png">
+            </div>
+            <div class="col-sm-6 order-sm-7 order-xs-7">
+                <h1>More coming soon!</h1>
+                <p class="lead">This is  just the beginning. There are many new and exciting features to be added!</p>                
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<script>//alert("❗ ATTENTION ALL FORTNITE GAMERS! 🎮 \nThe alpha webapp may have bugs, and currently exists for development purposes.");</script>
+
+<% include partials/footer %>
